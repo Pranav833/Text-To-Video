@@ -23,8 +23,8 @@ pipe = DiffusionPipeline.from_pretrained(
 
 
 
-api_key_1 = "AIzaSyAA8Qau0eG60dEHPdW8mSW7vnn5bzgPAdc"
-api_key_2 = "AIzaSyC4TFIOXDBweTC4hsmSUWdXrihFpS99Tu4"
+api_key_1 = ""
+api_key_2 = ""
 
 def text_transform(text):
     a = text
