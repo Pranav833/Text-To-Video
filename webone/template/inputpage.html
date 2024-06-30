@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Video Convertor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+            margin-top: 20px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 40%;
+            margin-left: 30%;
+            margin-bottom: 30px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        p.error-message {
+            color: #ff0000;
+            margin-top: 5px;
+        }
+
+        .or-divider::before,
+        .or-divider::after {
+            content: "";
+            display: inline-block;
+            width: 46%;
+            border-top: 1px solid #ccc;
+            vertical-align: middle;
+            margin: 10px 10px;
+        }
+
+        #video-container {
+            display: none;
+            margin-top: 20px;
+        }
+
+        #loading {
+            display: none;
+            text-align: center;
+        }
+
+        #loading img {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Text to Video Convertor</h1>
+        <h2>Enter text</h2>
+        <form id="text-form" method="post">
+            {% csrf_token %}
+            {{ text_form }}
+            <button type="submit" onclick="submitTextForm()">Submit Text</button>
+            {% if text_form.errors %}
+                <p class="error-message">{{ text_form.errors }}</p>
+            {% endif %}
+        </form>
+        <div class="or-divider">or</div>
+        <h2>Upload PDF</h2>
+        <form id="pdf-form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ pdf_form }}
+            <button type="submit" onclick="submitPDFForm()">Submit PDF</button>
+            {% if pdf_form.errors %}
+                <p class="error-message">{{ pdf_form.errors }}</p>
+            {% endif %}
+        </form>
+
+        <div id="loading">
+            <img src="../static/loading.gif" alt="Loading">
+            <p>Creating Movie...</p>
+        </div>
+
+        <div id="video-container">
+            <video id="video" width="100%" controls>
+                <source src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+
+    <script>
+        function submitTextForm() {
+            document.getElementById("loading").style.display = "block";r
+            document.getElementById("video-container").style.display = "none";
+            setTimeout(showVideo, 60000);
+        }
+
+        function submitPDFForm() {
+            document.getElementById("loading").style.display = "block";
+            document.getElementById("video-container").style.display = "none";
+            setTimeout(showVideo, 60000);
+        }
+
+        // Function to show video
+        function showVideo() {
+            document.getElementById("loading").style.display = "none";
+            document.getElementById("video-container").style.display = "block";
+            document.getElementById("video").src = "media/videos/generated_video.mp4";
+
+        }
+    </script>
+</body>
+</html>
